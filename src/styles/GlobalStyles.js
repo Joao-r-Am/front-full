@@ -1,5 +1,11 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { primaryDarkColor, primaryColor } from '../config/colors';
+import {
+  primaryDarkColor,
+  primaryColor,
+  errorColor,
+  successColor,
+} from '../config/colors';
+import 'react-toastify/dist/ReactToastify.css';
 
 // opções gerais de componentes
 export default createGlobalStyle`
@@ -38,6 +44,14 @@ export default createGlobalStyle`
   ul{
     list-style: armenian;
   }
+
+body .Toastify .Toastify__toast-container .Toastify__toast--success {
+  background-color: ${successColor};
+}
+
+body .Toastify .Toastify__toast-container .Toastify__toast--error {
+  background-color: ${errorColor};
+}
 `;
 
 // componente main de todo o app
