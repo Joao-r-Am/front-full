@@ -47,10 +47,12 @@ export default createGlobalStyle`
 
 body .Toastify .Toastify__toast-container .Toastify__toast--success {
   background-color: ${successColor};
+  color: #fff;
 }
 
 body .Toastify .Toastify__toast-container .Toastify__toast--error {
   background-color: ${errorColor};
+  color: #fff;
 }
 `;
 
