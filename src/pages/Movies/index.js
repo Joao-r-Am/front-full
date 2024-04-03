@@ -5,20 +5,25 @@ import { MovieContainer, MovieBackdrop } from './styled';
 import { get } from 'lodash';
 import { FaUserCircle, FaEdit, FaWindowClose } from 'react-icons/fa';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import Loading from '../../components/Loading';
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
+      setIsLoading(true);
       const response = await axios.get('/movies');
       setMovies(response.data);
+      setIsLoading(false);
     }
     getData();
   }, []);
 
   return (
     <Container>
+      <Loading isLoading={isLoading} />
       <h1>Movies</h1>
       <MovieContainer>
         {movies.map((movie) => (

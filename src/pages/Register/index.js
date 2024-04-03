@@ -6,10 +6,12 @@ import { isEmail } from 'validator';
 import { get } from 'lodash';
 import axios from '../../services/axios';
 import history from '../../services/history';
+import Loading from '../../components/Loading';
 
 export default function Register() {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -20,13 +22,14 @@ export default function Register() {
       toast.error('A senha deve ter entre 6 a 255 caracteres');
     }
 
-    if (!isEmail(login)) {
+    if (isEmail(login)) {
       formsErrors = true;
       toast.error('Email inválido');
     }
 
     if (formsErrors) return;
 
+    setIsLoading(true);
     try {
       await axios.post('/auth/register', { login, password });
       toast.success('Cadastro realizado com sucesso!');
@@ -34,17 +37,20 @@ export default function Register() {
     } catch (err) {
       const errors = get(err, 'response.data.errors', []);
       errors.map((error) => toast.error(error));
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
     <Container>
+      <Loading isLoading={isLoading} />
       <h1>Crie sua Conta</h1>
       <Form onSubmit={handleSubmit}>
         <label htmlFor="email">
           Email:
           <input
-            type="email"
+            type="text"
             value={login}
             onChange={(e) => setLogin(e.target.value)}
             placeholder="Seu Email"
