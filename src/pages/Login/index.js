@@ -33,6 +33,11 @@ export default function Login(props) {
 
     if (formsErrors) return;
 
+    // const user = {
+    //   login: login,
+    //   password: password
+    // }
+
     dispatch(action.loginRequest({ login, password, prevPath }));
   }
 
