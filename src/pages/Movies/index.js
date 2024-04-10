@@ -3,9 +3,15 @@ import { Container } from '../../styles/GlobalStyles';
 import axios from '../../services/axios';
 import { MovieContainer, MovieBackdrop } from './styled';
 import { get } from 'lodash';
-import { FaUserCircle, FaEdit, FaWindowClose } from 'react-icons/fa';
+import {
+  FaUserCircle,
+  FaEdit,
+  FaWindowClose,
+  FaExclamation,
+} from 'react-icons/fa';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Loading from '../../components/Loading';
+import { toast } from 'react-toastify';
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
@@ -20,6 +26,31 @@ export default function Movies() {
     }
     getData();
   }, []);
+
+  const handleDeleteAsk = (e) => {
+    e.preventDefault();
+    const exclamation = e.currentTarget.nextSibling;
+    exclamation.setAttribute('display', 'block');
+    e.currentTarget.remove();
+  };
+
+  const handleDelete = async (e, imdbId) => {
+    try {
+      setIsLoading(true);
+      await axios.delete(`/movies/${imdbId}`);
+      e.target.parentElement.remove();
+      setIsLoading(false);
+    } catch (err) {
+      const errors = get(err, 'response.data.error', []);
+      const status = get(err, 'response.status', 0);
+      errors.map((error) => toast.error(error));
+      if (status === 401) {
+        toast.error('Faça login');
+      } else {
+        toast.error('Erro ao excluir o aluno');
+      }
+    }
+  };
 
   return (
     <Container>
@@ -40,9 +71,18 @@ export default function Movies() {
             <Link to={`/movie/${movie.imdbId}/edit`}>
               <FaEdit size={16}></FaEdit>
             </Link>
-            <Link to={`/movie/${movie.imdbId}/delete`}>
+            <Link
+              onClick={handleDeleteAsk}
+              to={`/movie/${movie.imdbId}/delete`}
+            >
               <FaWindowClose size={16}></FaWindowClose>
             </Link>
+            <FaExclamation
+              size={16}
+              display="none"
+              cursor="pointer"
+              onClick={(e) => handleDelete(e, movie.imdbId)}
+            />
           </div>
         ))}
       </MovieContainer>
