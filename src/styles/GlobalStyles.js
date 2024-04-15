@@ -43,7 +43,7 @@ export default createGlobalStyle`
 
   a{
     text-decoration: none;
-    background-color: ${primaryColor};
+    /* background-color: ${primaryColor}; */
   }
 
   ul{

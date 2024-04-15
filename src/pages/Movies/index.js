@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../styles/GlobalStyles';
 import axios from '../../services/axios';
-import { MovieContainer, MovieBackdrop } from './styled';
+import { MovieContainer, MovieBackdrop, NewMovie } from './styled';
 import { get } from 'lodash';
 import {
   FaUserCircle,
@@ -43,11 +43,11 @@ export default function Movies() {
     } catch (err) {
       const errors = get(err, 'response.data.error', []);
       const status = get(err, 'response.status', 0);
-      errors.map((error) => toast.error(error));
+      // errors.map((error) => toast.error(error));
       if (status === 401) {
         toast.error('Faça login');
       } else {
-        toast.error('Erro ao excluir o aluno');
+        toast.error('Erro ao excluir o filme');
       }
     }
   };
@@ -56,6 +56,7 @@ export default function Movies() {
     <Container>
       <Loading isLoading={isLoading} />
       <h1>Movies</h1>
+      <NewMovie to="/movie/">Novo Filme</NewMovie>
       <MovieContainer>
         {movies.map((movie) => (
           <div key={String(movie.id)}>
@@ -66,8 +67,8 @@ export default function Movies() {
                 <FaUserCircle size={36} />
               )}
             </MovieBackdrop>
-            <span>{movie.title}:</span>
-            <span>{movie.releaseDate}</span>
+            <span>{movie.title}</span>
+
             <Link to={`/movie/${movie.imdbId}/edit`}>
               <FaEdit size={16}></FaEdit>
             </Link>

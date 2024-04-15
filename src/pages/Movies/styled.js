@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const MovieContainer = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
 
   div {
     display: flex;
@@ -16,8 +17,13 @@ export const MovieContainer = styled.div`
 `;
 export const MovieBackdrop = styled.div`
   img {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
   }
+`;
+
+export const NewMovie = styled(Link)`
+  display: block;
+  padding: 20px 0 10px 0;
 `;
