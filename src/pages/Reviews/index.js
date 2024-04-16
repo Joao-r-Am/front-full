@@ -37,7 +37,6 @@ export default function Reviews({ match }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
     setIsLoading(true);
     let formError = false;
 
@@ -50,7 +49,6 @@ export default function Reviews({ match }) {
     try {
       await axios.post('/reviews', { reviewBody: coment, imdbId: id });
       toast.success('Comentario adicionado com sucesso');
-      console.log(coment);
       setComent('');
       setIsLoading(false);
     } catch (err) {

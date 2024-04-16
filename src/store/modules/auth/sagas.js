@@ -45,7 +45,6 @@ function* registerRequest({ payload }) {
       history.push('/login');
     }
   } catch (err) {
-    console.log(err.response);
     const errors = get(err, 'response.data.error', []);
     const status = get(err, 'response.status', 0);
 
