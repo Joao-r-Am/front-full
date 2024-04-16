@@ -40,7 +40,6 @@ export default function Movie({ match }) {
         const { data } = await axios.get(`/movies/${id}`);
         const Foto = get(data, 'poster', '');
         setFoto(Foto);
-        // console.log(data);
         setImdbId(data.imdbId);
         setTitle(data.title);
         setPoster(data.poster);
@@ -171,7 +170,7 @@ export default function Movie({ match }) {
       {id && (
         <ProfilePicture>
           {foto ? <img src={foto} alt={title} /> : <FaUserCircle size={180} />}
-          <Link to={`/fotos/${id}`}>
+          <Link to={`/reviews/${id}`}>
             <FaEdit size={24} />
           </Link>
         </ProfilePicture>
